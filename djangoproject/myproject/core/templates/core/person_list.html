@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <form class="navbar-form navbar-right" action="." method="get">
+        <!-- add -->
+        <a href="{% url 'person_add' %}">
+            <button type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Add
+            </button>
+        </a>
+        <!-- search form -->
+        <div class="form-group">
+            <input id="search_box" name="search_box" type="text" placeholder="Search..." class="form-control">
+            <button type="submit" class="btn btn-success form-control"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </form>
+
+    <h2>Contacts List</h2>
+
+    {% if persons %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>CPF</th>
+                    <th>Birthday</th>
+                    <th class="text-center">Blocked</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for person in persons %}
+                {% if person.blocked %}
+                    <tr class="danger">
+                {% else %}
+                    <tr>
+                {% endif %}
+                    <td><a href="{{ person.get_absolute_url }}">{{ person.full_name }}</a></td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.phone }}</td>
+                    <td>{{ person.cpf }}</td>
+                    <td>{{ person.birthday|date:"d/m/Y" }}</td>
+                    {% if person.blocked %}
+                        <td class="text-center"><span class="glyphicon glyphicon-ok-sign" style="color: #44AD41"></span></td>
+                    {% else %}
+                        <td class="text-center"><span class="glyphicon glyphicon-minus-sign" style="color: #DE2121"></span></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-warning">Without items in this list.</p>
+    {% endif %}
+
+    <hr>
+    <div>
+        {% if count > 0 %}
+            <h3><b>Total:</b> {{ count }}
+                {% if count == 1 %} contact {% elif count > 1 %} contacts {% endif %}
+            </h3>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- pagination -->
+{% include "pagination.html" %}
+
+{% endblock content %}

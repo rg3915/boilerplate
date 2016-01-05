@@ -1,0 +1,8 @@
+Django==1.9.1
+django-bootstrap-form==3.2
+django-daterange-filter==1.2.0
+djangorestframework==3.3.2
+names==0.3.0
+pytz==2015.7
+rstr==2.2.3
+selenium==2.48.0

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+    <title>Person Detail</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+<form class="navbar-form navbar-right" action="." method="get">
+    <!-- edit -->
+    <a href="{% url 'person_edit' pk=person.id %}">
+        <button id="edit_person" type="button" class="btn btn-success">
+            <span class="fa fa-pencil"></span> Edit
+        </button>
+    </a>
+</form>
+    
+<div class="col-lg-8">
+    <div class="col-md-2 column">
+        <span class="fa fa-user" style="font-size: 120px;"></span>
+    </div>
+    <div class="col-md-offset-3 column">
+        <h1>{{ object.full_name }}</h1>
+        {% if object.email %}
+            <h4><span class="glyphicon glyphicon-envelope"></span><a href="#"> {{ object.email }}</a></h4>
+        {% endif %}
+        {% if object.phone %}
+            <h4><span class="glyphicon glyphicon-earphone"></span><a href="#"> {{ object.phone }}</a></h4>
+        {% else %}
+            <h4><span class="glyphicon glyphicon-earphone"></span> ---</h4>
+        {% endif %}
+
+    </div>
+
+    </br>
+
+    <table class="table table-user-information">
+        <tbody>
+            <tr>
+                <th class="col-md-3 text-right">Gender</th>
+                <td>{{ object.get_gender_display }}</td>
+            </tr>
+            {% if object.cpf %}
+                <tr>
+                    <th class="col-md-3 text-right">CPF</th>
+                    <td>{{ object.cpf }}</td>
+                </tr>
+            {% endif %}
+            {% if object.birthday %}
+                <tr>
+                    <th class="col-md-3 text-right">Birthday</th>
+                    <td>{{ object.birthday|date:"Y/m/d" }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th class="col-md-3 text-right">Blocked</th>
+                {% if object.blocked %}
+                    <td><span class="glyphicon glyphicon-ok-sign" style="color: #44AD41"></span></td>
+                {% else %}
+                    <td><span class="glyphicon glyphicon-minus-sign" style="color: #DE2121"></span></td>
+                {% endif %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</div>
+{% endblock content %}
