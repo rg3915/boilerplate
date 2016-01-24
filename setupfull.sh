@@ -44,7 +44,9 @@ echo "${green}>>> venv is created.${reset}"
 sleep 2
 echo "${green}>>> activate the venv.${reset}"
 source .venv/bin/activate
-PS1="(`basename \"$VIRTUAL_ENV\"`)\e[1;34m:/\W\033[00m$ "
+
+echo "${green}>>> Short the prompt path.${reset}"
+PS1="(`basename \"$VIRTUAL_ENV\"`)\e[1;34m:/\W\e[00m$ "
 sleep 2
 
 # installdjango
