@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # my app
-    'myproject.core',
     # third-party apps
     'bootstrapform',
     'daterange_filter',
+    # my app
+    'myproject.core',
 ]
 
 MIDDLEWARE_CLASSES = [
