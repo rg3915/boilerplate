@@ -100,15 +100,15 @@ cd ..
 # ********** Editing .env and settings.py **********
 echo "${green}>>> Refactor .env${reset}"
 # find SECRET_KEY
-grep "SECRET_KEY" $PROJECT/settings.py > .env
+# grep "SECRET_KEY" $PROJECT/settings.py > .env
 # replace =
-sed -i "s/ = /=/g" .env
+# sed -i "s/ = /=/g" .env
 # replace '
-sed -i "s/'//g" .env
-cat << EOF >> .env
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1, .localhost, .herokuapp.com
-EOF
+# sed -i "s/'//g" .env
+# cat << EOF >> .env
+# DEBUG=True
+# ALLOWED_HOSTS=127.0.0.1, .localhost, .herokuapp.com
+# EOF
 
 echo "${green}>>> Editing settings.py${reset}"
 # insert text in line below of string
@@ -137,6 +137,41 @@ sed -i "s/UTC/America\/Sao_Paulo/g" $PROJECT/settings.py
 # insert text in line below of string
 sed -i "/USE_TZ/a\\\nUSE_THOUSAND_SEPARATOR = True\n\nDECIMAL_SEPARATOR = ','" $PROJECT/settings.py
 sed -i "/STATIC_URL/a\STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')\n\nLOGIN_URL = '/admin/login/'" $PROJECT/settings.py
+
+# Create HttpResponse
+cat << EOF > $PROJECT/core/views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse('Hello World')
+EOF
+
+# Create core/urls.py
+cat << EOF > $PROJECT/core/urls.py
+from django.conf.urls import url
+from $PROJECT.core import views as c
+
+urlpatterns = [
+    url(r'^$', c.home, name='home'),
+]
+EOF
+
+# Editing urls.py
+cat << EOF > $PROJECT/urls.py
+from django.conf.urls import include, url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'', include('$PROJECT.core.urls', namespace='core')),
+    url(r'^admin/', admin.site.urls),
+]
+EOF
+
+# Running migrate
+echo "${green}>>> Running migrate ...${reset}"
+python manage.py migrate
 
 # Running tests
 echo "${green}>>> Running tests ...${reset}"
