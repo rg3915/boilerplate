@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy as r
 from django.db.models import Q
-from django.views.generic import CreateView, TemplateView, ListView, DetailView
-from django.views.generic.edit import UpdateView
+from django.shortcuts import render
+from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import UpdateView, DeleteView
 from .models import Person
 from .forms import PersonForm
 
@@ -39,7 +38,7 @@ class PersonList(CounterMixin, ListView):
 class PersonCreate(CreateView):
     template_name = 'core/person_form.html'
     form_class = PersonForm
-    success_url = reverse_lazy('person_list')
+    success_url = r('core:person_list')
 
 
 class PersonDetail(DetailView):
@@ -47,8 +46,7 @@ class PersonDetail(DetailView):
     model = Person
 
 
-class PersonUpdate(UpdateView):
-    template_name = 'core/person_form.html'
-    model = Person
-    form_class = PersonForm
-    success_url = reverse_lazy('person_list')
+person_update = UpdateView.as_view(model=Person, form_class=PersonForm)
+
+person_delete = DeleteView.as_view(
+    model=Person, success_url=r('core:person_list'))

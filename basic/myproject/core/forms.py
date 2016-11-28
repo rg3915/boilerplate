@@ -10,7 +10,8 @@ class PersonForm(forms.ModelForm):
 
     class Meta:
         model = Person
-        fields = '__all__'
+        fields = ['gender', 'treatment', 'first_name', 'last_name', 'email', 'cpf', 'address',
+                  'complement', 'district', 'city', 'uf', 'cep', 'birthday', 'blocked']
 
     def clean_cpf(self):
-        return self.cleaned_data['cpf'] or None
+        return self.cleaned_data['cpf'] or ''

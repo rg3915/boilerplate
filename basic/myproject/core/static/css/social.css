@@ -1,68 +1,3 @@
-
-
-# Create requirements
-mkdir requirements
-touch requirements.txt 
-touch requirements/{base,dev,prod}.txt
-
-# Bootstrap templates
-mkdir -p myproject/core/templates/core
-touch myproject/core/templates/{base,index,nav,pagination}.html
-touch myproject/core/templates/core/person_{detail,form,list}.html
-
-echo "${green}>>> Creating static/css directory${reset}"
-mkdir -p myproject/core/static/css
-
-echo "${green}>>> Creating main.css${reset}"
-cat << EOF > myproject/core/static/css/main.css
-/* Sticky footer styles
--------------------------------------------------- */
-/* http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css */
-/* http://getbootstrap.com/2.3.2/examples/sticky-footer.html */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #101010;
-}
-.credit {
-  /* Center vertical text */
-  margin: 20px 0;
-}
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  body {
-    margin-bottom: 120px;
-  }
-
-  #footer {
-    height: 120px;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-}
-/* My personal styles. */
-.ok {
-    color: #44AD41; /*verde*/
-}
-
-.no {
-    color: #DE2121; /*vermelho*/
-}
-EOF
-
-echo "${green}>>> Creating social.css${reset}"
-cat << EOF > myproject/core/static/css/social.css
 /* http://www.kodingmadesimple.com/2014/11/create-stylish-bootstrap-3-social-media-icons.html */
 .social {
     margin: 0;
@@ -180,6 +115,10 @@ cat << EOF > myproject/core/static/css/social.css
     background: #DF192A;
 }
 
+.social .fa-telegram {
+    background: #0088cc;
+}
+
 .social .fa-slack {
     background: #4F3A4B;
 }
@@ -224,10 +163,3 @@ cat << EOF > myproject/core/static/css/social.css
 .socialfooter i:hover {
     color: #00ABE3;
 }
-EOF
-
-
-pip install django dj-database-url django-bootstrap-form django-daterange-filter django-localflavor django-widget-tweaks python-decouple pytz selenium django-extensions
-
-python manage.py makemigrations core
-python manage.py migrate

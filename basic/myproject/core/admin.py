@@ -1,14 +1,28 @@
 from daterange_filter.filter import DateRangeFilter
 from django.contrib import admin
-from .models import Person
+from .models import Person, Phone
+from .forms import PersonForm
 
 
+class PhoneInline(admin.TabularInline):
+    model = Phone
+    extra = 1
+
+
+@admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'gender', 'email',
-                    'phone', 'cpf', 'birthday', 'blocked')
-    date_hierarchy = 'birthday'
-    search_fields = ('first_name', 'last_name', 'cpf')
-    list_filter = ('gender', ('created', DateRangeFilter),)
+    inlines = [PhoneInline]
+    list_display = ('__str__', 'gender', 'email', 'cpf',
+                    'uf', 'birthday', 'created', 'blocked')
+    date_hierarchy = 'created'
+    search_fields = ('first_name', 'last_name', 'email', 'cpf')
+    list_filter = (
+        'gender',
+        ('created', DateRangeFilter),
+    )
+    form = PersonForm
 
+    def phone(self, obj):
+        return obj.phone_set.first()
 
-admin.site.register(Person, PersonAdmin)
+    phone.short_description = 'phone'

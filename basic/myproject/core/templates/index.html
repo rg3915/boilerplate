@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="jumbotron">
-            <h1>Contacts</h1>
+            <h1>Welcome!</h1>
             <h3>Contacts list make in Django.</h3>
             <p>The project contains:</p>
             <ul>
@@ -13,12 +13,14 @@
             <li>Person Detail</li>
             <li>Person Form</li>
             <li>Person Admin</li>
-            <li>API REST</li>
             <li>Tests with Selenium</li>
             <li>Fixtures with Generate Random Values</li>
-            <li>New commands with django-admin</li>
-            <li>Gráficos</li>
             </ul>
+            <a href="{% url 'core:person_add' %}">
+              <button id="new_customer" type="button" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Register
+              </button>
+            </a>
         </div>
     </div>
 {% endblock content %}

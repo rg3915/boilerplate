@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
+{% block title %}Contacts{% endblock title %}
+
 {% block content %}
 
 <div class="container">
 
     <form class="navbar-form navbar-right" action="." method="get">
         <!-- add -->
-        <a href="{% url 'person_add' %}">
+        <a href="{% url 'core:person_add' %}">
             <button type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-plus"></span> Add
             </button>
@@ -41,7 +43,15 @@
                 {% endif %}
                     <td><a href="{{ person.get_absolute_url }}">{{ person.full_name }}</a></td>
                     <td>{{ person.email }}</td>
-                    <td>{{ person.phone }}</td>
+                    {% if person.phone_set.first %}
+                      <td>{{ person.phone_set.first }} 
+                        {% if person.phone_set.count > 1 %}
+                          <a href="{{ person.get_absolute_url }}">+{{ person.phone_set.count|add:"-1" }}</a>
+                        {% endif %}
+                      </td>
+                    {% else %}
+                      <td>---</td>
+                    {% endif %}
                     <td>{{ person.cpf }}</td>
                     <td>{{ person.birthday|date:"d/m/Y" }}</td>
                     {% if person.blocked %}
@@ -54,12 +64,20 @@
             </tbody>
         </table>
     {% else %}
-        <p class="alert alert-warning">Without items in this list.</p>
+        <div class="alert alert-warning text-center">
+          <p>Without items in this list.</p>
+          <!-- add -->
+          <a href="{% url 'core:person_add' %}">
+              <button type="button" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-plus"></span> Add
+              </button>
+          </a>
+        </div>
     {% endif %}
 
-    <hr>
     <div>
         {% if count > 0 %}
+            <hr>
             <h3><b>Total:</b> {{ count }}
                 {% if count == 1 %} contact {% elif count > 1 %} contacts {% endif %}
             </h3>
@@ -69,6 +87,8 @@
 </div>
 
 <!-- pagination -->
-{% include "pagination.html" %}
+{% if count > 0 %}
+  {% include "pagination.html" %}
+{% endif %}
 
 {% endblock content %}
