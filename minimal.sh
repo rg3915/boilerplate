@@ -192,6 +192,7 @@ tabrm -rf __pycache__
 tabrm -f db.sqlite3
 tabrm -f .env
 tabrm -f manage.py
+tabrm -f requirements.txt
 EOF
 
 # Replace tab to \t

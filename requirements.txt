@@ -1,5 +1,0 @@
-dj-database-url==0.4.1
-Django==1.10.3
-django-extensions==1.7.5
-python-decouple==3.0
-six==1.10.0

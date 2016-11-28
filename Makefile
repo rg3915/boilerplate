@@ -10,3 +10,4 @@ clear:
 	rm -f db.sqlite3
 	rm -f .env
 	rm -f manage.py
+	rm -f requirements.txt
