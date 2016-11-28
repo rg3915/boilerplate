@@ -29,6 +29,7 @@ echo "${green}>>> .venv is created${reset}"
 sleep 2
 echo "${green}>>> activate the .venv${reset}"
 source .venv/bin/activate
+# shortcut prompt, optional
 PS1="(`basename \"$VIRTUAL_ENV\"`)\e[1;34m:/\W\e[00m$ "
 sleep 2
 
@@ -98,7 +99,7 @@ python ../manage.py startapp core
 cd ..
 
 # ********** Editing .env and settings.py **********
-echo "${green}>>> Refactor .env${reset}"
+# echo "${green}>>> Refactor .env${reset}"
 # find SECRET_KEY
 # grep "SECRET_KEY" $PROJECT/settings.py > .env
 # replace =
@@ -176,6 +177,25 @@ python manage.py migrate
 # Running tests
 echo "${green}>>> Running tests ...${reset}"
 python manage.py test
+
+echo "${green}>>> Creating Makefile${reset}"
+cat << EOF > Makefile
+install:
+tabpip install -r requirements.txt
+
+createuser:
+tab./manage.py createsuperuser --username='admin' --email=''
+
+clear:
+tabrm -rf myproject
+tabrm -rf __pycache__
+tabrm -f db.sqlite3
+tabrm -f .env
+tabrm -f manage.py
+EOF
+
+# Replace tab to \t
+sed -i "s/tab/\t/g" Makefile
 
 echo "${green}>>> See the Makefile${reset}"
 cat Makefile

@@ -1,3 +1,9 @@
+install:
+	pip install -r requirements.txt
+
+createuser:
+	./manage.py createsuperuser --username='admin' --email=''
+
 clear:
 	rm -rf myproject
 	rm -rf __pycache__
