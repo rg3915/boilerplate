@@ -4,7 +4,12 @@ Is a test to create Django project with full shell script.
 
 `Django==1.10.x`
 
-* minimal
-* basic
-* ideal
-* full
+* [X] minimal
+
+```
+source minimal.sh
+```
+
+* [ ] basic
+* [ ] ideal
+* [ ] full
