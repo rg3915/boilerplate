@@ -41,12 +41,9 @@ class PersonCreate(CreateView):
     success_url = r('core:person_list')
 
 
-class PersonDetail(DetailView):
-    template_name = 'core/person_detail.html'
-    model = Person
-
+person_detail = DetailView.as_view(model=Person)
 
 person_update = UpdateView.as_view(model=Person, form_class=PersonForm)
 
-person_delete = DeleteView.as_view(
-    model=Person, success_url=r('core:person_list'))
+person_delete = DeleteView.as_view(model=Person,
+                                   success_url=r('core:person_list'))

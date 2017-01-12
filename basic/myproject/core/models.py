@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import resolve_url as r
 from localflavor.br.br_states import STATE_CHOICES
 # List of values for use in choices
 from .lists import GENDER_LIST, TREATMENT_LIST, PHONE_TYPE
@@ -31,6 +30,7 @@ class Person(TimeStampedModel, Address):
     gender = models.CharField(max_length=1, choices=GENDER_LIST)
     treatment = models.CharField(
         max_length=4, choices=TREATMENT_LIST, default='')
+    slug = models.SlugField('slug', blank=True)
     first_name = models.CharField('first name', max_length=30)
     last_name = models.CharField('last name', max_length=30)
     cpf = models.CharField('CPF', max_length=11, unique=True, blank=True)
@@ -44,13 +44,14 @@ class Person(TimeStampedModel, Address):
         verbose_name_plural = 'contacts'
 
     def __str__(self):
-        return ' '.join(filter(None, [self.get_treatment_display(), self.first_name, self.last_name]))
+        fname = [self.get_treatment_display(), self.first_name, self.last_name]
+        return ' '.join(filter(None, fname))
 
     full_name = property(__str__)
 
     def get_absolute_url(self):
-        ''' return id '''
-        return reverse_lazy('core:person_detail', kwargs={'pk': self.pk})
+        ''' return slug '''
+        return reverse_lazy('core:person_detail', kwargs={'slug': self.slug})
 
 
 class Phone(models.Model):
