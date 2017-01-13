@@ -1,16 +1,15 @@
 import time
-import csv
-from random import randint, choice
+from random import randint
 from decouple import config
+from gen_address import address, district, city, state_name
 from gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from gen_random_values import gen_cpf, gen_rg
+from gen_random_values import gen_digits, gen_cpf, gen_date
 from selenium import webdriver
-from lists import company_list, department_list
 
 
 HOME = config('HOME')
-page = webdriver.Firefox()
-# page = webdriver.Chrome(executable_path=HOME + '/chromedriver/chromedriver')
+# page = webdriver.Firefox()
+page = webdriver.Chrome(executable_path=HOME + '/chromedriver/chromedriver')
 page.maximize_window()
 time.sleep(0.5)
 page.get('http://localhost:8000/person/add/')
@@ -35,16 +34,9 @@ email = '{}.{}@example.com'.format(first_name[0].lower(), last_name.lower())
 
 slug = '{}-{}'.format(first_name.lower(), last_name.lower())
 
+cep = '{}-{}'.format(gen_digits(5), gen_digits(3))
+
 photo = 'http://icons.iconarchive.com/icons/icons-land/vista-people/256/Office-Customer-Male-Light-icon.png'
-
-address_list = []
-
-''' Lendo os dados de enderecos_.csv '''
-with open('fix/enderecos_.csv', 'r') as f:
-    r = csv.DictReader(f)
-    for dct in r:
-        address_list.append(dct)
-    f.close()
 
 search = page.find_element_by_id(gender)
 search.click()
@@ -53,42 +45,16 @@ fields = [
     ['id_treatment', treatment],
     ['id_first_name', first_name],
     ['id_last_name', last_name],
-    ['id_email', email],
     ['id_slug', slug],
-    ['id_company', choice(company_list)],
-    ['id_department', choice(department_list)],
-    ['id_occupation', 'Arquiteto'],
-]
-
-for field in fields:
-    search = page.find_element_by_id(field[0])
-    search.send_keys(field[1])
-    time.sleep(0.5)
-
-button = page.find_element_by_link_text('Documentos')
-button.click()
-
-fields = [
-    ['id_photo', photo],
+    ['id_email', email],
     ['id_cpf', gen_cpf()],
-    ['id_rg', gen_rg()],
-]
-
-for field in fields:
-    search = page.find_element_by_id(field[0])
-    search.send_keys(field[1])
-    time.sleep(0.5)
-
-button = page.find_element_by_link_text('Endereço')
-button.click()
-
-fields = [
-    ['id_address', address_list[INDEX]['address']],
+    ['id_address', address()],
     ['id_complement', 'Apto 303'],
-    ['id_district', address_list[INDEX]['district']],
-    ['id_city', address_list[INDEX]['city']],
-    ['id_uf', address_list[INDEX]['city']],  # deixa city mesmo
-    ['id_cep', address_list[INDEX]['cep']],
+    ['id_district', district()],
+    ['id_city', city()],
+    ['id_uf', state_name()],
+    ['id_cep', cep],
+    ['id_birthday', gen_date()],
 ]
 
 for field in fields:
