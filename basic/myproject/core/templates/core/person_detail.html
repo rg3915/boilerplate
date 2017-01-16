@@ -81,7 +81,7 @@
       {% if object.birthday %}
         <tr>
           <th class="col-md-3 text-right">Birthday</th>
-          <td>{{ object.birthday }}</td>
+          <td>{{ object.birthday|date:"d/m/Y" }}</td>
         </tr>
       {% endif %}
       <tr>
