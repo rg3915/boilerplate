@@ -50,6 +50,9 @@ states = (
     ('TO', 'Tocantins'))
 
 
+complements = ('andar', 'apto', 'casa', 'fundos', 'loja')
+
+
 def random_element(elements):
     return choice(elements)
 
@@ -111,3 +114,7 @@ def district():
     return random_element(districts)
 
 # https://github.com/joke2k/faker/blob/master/faker/providers/__init__.py
+
+
+def complement():
+    return random_element(complements)
