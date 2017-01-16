@@ -1,9 +1,9 @@
 import time
 from random import randint
 from decouple import config
-from gen_address import address, district, city, state_name
+from gen_address import address, district, city, state_name, complement
 from gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from gen_random_values import gen_digits, gen_cpf, gen_date
+from gen_random_values import gen_digits, gen_cpf, gen_date, convert_date
 from selenium import webdriver
 
 
@@ -36,6 +36,8 @@ slug = '{}-{}'.format(first_name.lower(), last_name.lower())
 
 cep = '{}-{}'.format(gen_digits(5), gen_digits(3))
 
+complement = '{} {}'.format(complement(), gen_digits(2))
+
 photo = 'http://icons.iconarchive.com/icons/icons-land/vista-people/256/Office-Customer-Male-Light-icon.png'
 
 search = page.find_element_by_id(gender)
@@ -49,18 +51,18 @@ fields = [
     ['id_email', email],
     ['id_cpf', gen_cpf()],
     ['id_address', address()],
-    ['id_complement', 'Apto 303'],
+    ['id_complement', complement],
     ['id_district', district()],
     ['id_city', city()],
     ['id_uf', state_name()],
     ['id_cep', cep],
-    ['id_birthday', gen_date()],
+    ['id_birthday', convert_date(gen_date())],
 ]
 
 for field in fields:
     search = page.find_element_by_id(field[0])
     search.send_keys(field[1])
-    time.sleep(0.5)
+    time.sleep(0.2)
 
 
 # button = page.find_element_by_id('id_submit')

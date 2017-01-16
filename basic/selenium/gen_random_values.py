@@ -62,6 +62,11 @@ def gen_date(min_year=1900, max_year=datetime.now().year):
     return start + (end - start) * random()
 
 
+def convert_date(d):
+    # converte data no formato mês, dia, ano.
+    return d.strftime('%m/%d/%Y')
+
+
 def gen_datetime(min_year=1900, max_year=datetime.now().year):
     # gera um datetime no formato yyyy-mm-dd hh:mm:ss.000000
     start = datetime(min_year, 1, 1, 00, 00, 00)
