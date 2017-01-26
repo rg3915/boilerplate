@@ -1,8 +1,9 @@
 import random
 import names
 from myproject.core.models import Person
+from fixtures.gen_address import address, district, city, state_uf, complement
 from fixtures.gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from fixtures.gen_random_values import gen_cpf, gen_timestamp
+from fixtures.gen_random_values import gen_digits, gen_cpf, gen_timestamp
 
 REPEAT = 20
 
@@ -15,10 +16,13 @@ for i in range(REPEAT):
         treatment = gen_female_first_name()['treatment']
         first_name = gen_female_first_name()['first_name']
     last_name = names.get_last_name()
-    slug = first_name.lower() + '-' + last_name.lower()
+    email = '{}.{}@example.com'.format(
+        first_name[0].lower(), last_name.lower())
+    slug = '{}-{}'.format(first_name[0].lower(), last_name.lower())
     birthday = gen_timestamp() + '+00'
-    email = first_name[0].lower() + '.' + last_name.lower() + '@example.com'
     blocked = random.choice([1, 0])
+    cep = '{}-{}'.format(gen_digits(5), gen_digits(3))
+    complement = '{} {}'.format(complement(), gen_digits(2))
     Person.objects.create(
         gender=g,
         treatment=treatment,
@@ -28,13 +32,14 @@ for i in range(REPEAT):
         cpf=gen_cpf(),
         birthday=birthday,
         email=email,
+        address=address(),
+        complement=complement,
+        district=district(),
+        city=city(),
+        uf=state_uf(),
+        cep=cep,
         blocked=blocked,
-        address,
-        complement,
-        district,
-        city,
-        uf,
-        cep,
     )
+
 
 print('\n%d Persons salvo com sucesso.' % REPEAT)

@@ -1,25 +1,6 @@
 import string
-from random import random, randint, choice, randrange
+from random import random, randrange, choice
 from datetime import date, datetime, timedelta
-from decimal import Decimal
-
-
-def gen_string(max_length):
-    return str(''.join(choice(string.ascii_letters) for i in range(max_length)))
-gen_string.required = ['max_length']
-
-
-def gen_age(min_age=15, max_age=99):
-    # gera numeros inteiros entre 15 e 99
-    return randint(min_age, max_age)
-
-
-def gen_digits(max_length):
-    return str(''.join(choice(string.digits) for i in range(max_length)))
-
-
-def gen_rg():
-    return gen_digits(10)
 
 
 def gen_cpf():
@@ -38,20 +19,14 @@ def gen_cpf():
     return "%d%d%d%d%d%d%d%d%d%d%d" % tuple(n)
 
 
-def gen_ncm():
-    return gen_digits(8)
+def gen_digits(max_length):
+    return str(''.join(choice(string.digits) for i in range(max_length)))
 
 
 def gen_phone():
     # gera um telefone no formato xx xxxxx-xxxx
     digits_ = gen_digits(11)
     return '{} 9{}-{}'.format(digits_[:2], digits_[3:7], digits_[7:])
-
-
-def gen_decimal(max_digits=5, decimal_places=2):
-    num_as_str = lambda x: ''.join([str(randint(0, 9)) for i in range(x)])
-    return Decimal("%s.%s" % (num_as_str(max_digits - decimal_places), num_as_str(decimal_places)))
-gen_decimal.required = ['max_digits', 'decimal_places']
 
 
 def gen_date(min_year=1900, max_year=datetime.now().year):
@@ -69,20 +44,18 @@ def convert_date(d):
 
 def gen_datetime(min_year=1900, max_year=datetime.now().year):
     # gera um datetime no formato yyyy-mm-dd hh:mm:ss.000000
-    start = datetime(min_year, 1, 1, 00, 00, 00)
+    start = datetime(min_year, 1, 1)
     years = max_year - min_year + 1
     end = start + timedelta(days=365 * years)
-    return start + (end - start) * random()
+    return (start + (end - start) * random()).isoformat(" ")
 
 
-def gen_timestamp(min_year=1915, max_year=1997):
+def gen_timestamp(min_year=1915, max_year=datetime.now().year):
     # gera um datetime no formato yyyy-mm-dd hh:mm:ss.000000
     min_date = datetime(min_year, 1, 1)
     max_date = datetime(max_year + 1, 1, 1)
     delta = random() * (max_date - min_date).total_seconds()
     return (min_date + timedelta(seconds=delta)).isoformat(" ")
 
-
-def gen_ipi():
-    num_as_str = lambda x: ''.join([str(randint(0, 9)) for i in range(x)])
-    return Decimal("0.%s" % (num_as_str(2)))
+# See more gen_random_values in
+# https://gist.github.com/rg3915/744aacde209046901748

@@ -231,3 +231,8 @@ pip install django dj-database-url django-bootstrap-form django-daterange-filter
 
 python manage.py makemigrations core
 python manage.py migrate
+
+# Tem que copiar os arquivos
+cp fixtures/gen_address.py selenium/gen_address_.py
+cp fixtures/gen_names.py selenium/gen_names_.py
+cp fixtures/gen_random_values.py selenium/gen_random_values_.py
