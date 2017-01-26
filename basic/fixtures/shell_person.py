@@ -15,6 +15,7 @@ for i in range(REPEAT):
         treatment = gen_female_first_name()['treatment']
         first_name = gen_female_first_name()['first_name']
     last_name = names.get_last_name()
+    slug = first_name.lower() + '-' + last_name.lower()
     birthday = gen_timestamp() + '+00'
     email = first_name[0].lower() + '.' + last_name.lower() + '@example.com'
     blocked = random.choice([1, 0])
@@ -23,10 +24,17 @@ for i in range(REPEAT):
         treatment=treatment,
         first_name=first_name,
         last_name=last_name,
+        slug=slug,
         cpf=gen_cpf(),
         birthday=birthday,
         email=email,
         blocked=blocked,
+        address,
+        complement,
+        district,
+        city,
+        uf,
+        cep,
     )
 
 print('\n%d Persons salvo com sucesso.' % REPEAT)

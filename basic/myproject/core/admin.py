@@ -12,7 +12,7 @@ class PhoneInline(admin.TabularInline):
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     inlines = [PhoneInline]
-    list_display = ('__str__', 'gender', 'email', 'cpf',
+    list_display = ('__str__', 'slug', 'gender', 'email', 'cpf',
                     'uf', 'birthday', 'created', 'blocked')
     date_hierarchy = 'created'
     search_fields = ('first_name', 'last_name', 'email', 'cpf')

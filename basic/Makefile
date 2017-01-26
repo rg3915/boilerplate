@@ -3,7 +3,7 @@ migrate:
 	python manage.py migrate
 
 selenium_person:
-	python fixtures/selenium_person.py
+	python selenium/selenium_person.py
 
 shell_person:
 	python manage.py shell < fixtures/shell_person.py

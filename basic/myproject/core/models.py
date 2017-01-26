@@ -30,7 +30,7 @@ class Person(TimeStampedModel, Address):
     gender = models.CharField(max_length=1, choices=GENDER_LIST)
     treatment = models.CharField(
         max_length=4, choices=TREATMENT_LIST, default='')
-    slug = models.SlugField('slug', blank=True)
+    slug = models.SlugField('slug')
     first_name = models.CharField('first name', max_length=30)
     last_name = models.CharField('last name', max_length=30)
     cpf = models.CharField('CPF', max_length=11, unique=True, blank=True)
