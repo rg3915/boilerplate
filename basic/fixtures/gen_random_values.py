@@ -1,6 +1,6 @@
 import string
 from random import random, randrange, choice
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 
 def gen_cpf():

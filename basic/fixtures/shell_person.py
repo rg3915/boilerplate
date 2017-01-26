@@ -2,7 +2,7 @@ import random
 import names
 from myproject.core.models import Person
 from fixtures.gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from fixtures.gen_random_values import gen_doc, gen_timestamp, gen_phone
+from fixtures.gen_random_values import gen_cpf, gen_timestamp
 
 REPEAT = 20
 
@@ -23,10 +23,9 @@ for i in range(REPEAT):
         treatment=treatment,
         first_name=first_name,
         last_name=last_name,
-        cpf=gen_doc(),
+        cpf=gen_cpf(),
         birthday=birthday,
         email=email,
-        phone=gen_phone(),
         blocked=blocked,
     )
 
