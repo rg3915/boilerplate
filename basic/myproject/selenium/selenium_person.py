@@ -1,10 +1,10 @@
 import time
 from random import randint
 from decouple import config
-from gen_address_ import address, district, city, state_name, complement
-from gen_names_ import gen_male_first_name, gen_female_first_name, gen_last_name
-from gen_random_values_ import gen_digits, gen_cpf, gen_date, convert_date
 from selenium import webdriver
+from gen_address import address, district, city, state_name, complement
+from gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
+from gen_random_values import gen_digits, gen_cpf, gen_date, convert_date
 
 
 HOME = config('HOME')
