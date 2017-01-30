@@ -1,9 +1,9 @@
 import random
 import names
 from myproject.core.models import Person
-from fixtures.gen_address import address, district, city, state_uf, complement
-from fixtures.gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from fixtures.gen_random_values import gen_digits, gen_cpf, gen_timestamp
+from myproject.selenium.gen_address import address, district, city, state_uf, complement
+from myproject.selenium.gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
+from myproject.selenium.gen_random_values import gen_digits, gen_cpf, gen_timestamp
 
 REPEAT = 20
 
@@ -22,7 +22,7 @@ for i in range(REPEAT):
     birthday = gen_timestamp() + '+00'
     blocked = random.choice([1, 0])
     cep = '{}-{}'.format(gen_digits(5), gen_digits(3))
-    complement = '{} {}'.format(complement(), gen_digits(2))
+    complement_ = '{} {}'.format(complement(), gen_digits(2))
     Person.objects.create(
         gender=g,
         treatment=treatment,
@@ -33,7 +33,7 @@ for i in range(REPEAT):
         birthday=birthday,
         email=email,
         address=address(),
-        complement=complement,
+        complement=complement_,
         district=district(),
         city=city(),
         uf=state_uf(),
