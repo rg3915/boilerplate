@@ -1,11 +1,14 @@
 import random
 import names
-from myproject.core.models import Person
+from myproject.core.models import Person, Phone
 from myproject.selenium.gen_address import address, district, city, state_uf, complement
 from myproject.selenium.gen_names import gen_male_first_name, gen_female_first_name, gen_last_name
-from myproject.selenium.gen_random_values import gen_digits, gen_cpf, gen_timestamp
+from myproject.selenium.gen_random_values import gen_digits, gen_cpf, gen_timestamp, gen_phone
 
+
+PHONE_TYPE = ('pri', 'com', 'res', 'cel')
 REPEAT = 20
+
 
 for i in range(REPEAT):
     g = random.choice(['M', 'F'])
@@ -40,6 +43,16 @@ for i in range(REPEAT):
         cep=cep,
         blocked=blocked,
     )
+
+
+''' Insert Phones '''
+persons = Person.objects.all()
+for person in persons:
+    for i in range(1, random.randint(1, 5)):
+        Phone.objects.create(
+            person=person,
+            phone=gen_phone(),
+            phone_type=random.choice(PHONE_TYPE))
 
 
 print('\n%d Persons salvo com sucesso.' % REPEAT)
