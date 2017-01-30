@@ -30,13 +30,13 @@ first_name = dict_['first_name']
 last_name = gen_last_name()
 print(first_name, last_name)
 
-email = '{}.{}@example.com'.format(first_name[0].lower(), last_name.lower())
-
 slug = '{}-{}'.format(first_name.lower(), last_name.lower())
+
+email = slug + '@example.com'
 
 cep = '{}-{}'.format(gen_digits(5), gen_digits(3))
 
-complement = '{} {}'.format(complement(), gen_digits(2))
+complement_ = '{} {}'.format(complement(), gen_digits(2))
 
 photo = 'http://icons.iconarchive.com/icons/icons-land/vista-people/256/Office-Customer-Male-Light-icon.png'
 
@@ -51,7 +51,7 @@ fields = [
     ['id_email', email],
     ['id_cpf', gen_cpf()],
     ['id_address', address()],
-    ['id_complement', complement],
+    ['id_complement', complement_],
     ['id_district', district()],
     ['id_city', city()],
     ['id_uf', state_name()],
