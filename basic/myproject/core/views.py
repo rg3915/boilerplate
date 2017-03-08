@@ -26,13 +26,13 @@ class PersonList(CounterMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        w = Person.objects.all()
+        persons = Person.objects.all()
         q = self.request.GET.get('search_box')
         if q is not None:
-            w = w.filter(
+            persons = persons.filter(
                 Q(first_name__icontains=q) |
                 Q(last_name__icontains=q))
-        return w
+        return persons
 
 
 class PersonCreate(CreateView):
